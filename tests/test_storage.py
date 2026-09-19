@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from logscope.models import EventType, Finding, LogEvent, Severity
@@ -10,7 +10,7 @@ def test_store_persists_events_findings_and_summary(tmp_path: Path) -> None:
     store = EventStore(str(database))
 
     event = LogEvent(
-        timestamp=datetime(2026, 9, 19, 8, 0, tzinfo=timezone.utc),
+        timestamp=datetime(2026, 9, 19, 8, 0, tzinfo=UTC),
         event_type=EventType.LOGIN_FAILURE,
         source_ip="203.0.113.10",
         username="alex",
