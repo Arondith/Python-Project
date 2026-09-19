@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
@@ -16,13 +16,13 @@ def test_naive_timestamp_is_normalized_to_utc() -> None:
         message="test",
     )
 
-    assert event.timestamp.tzinfo == timezone.utc
+    assert event.timestamp.tzinfo == UTC
 
 
 def test_invalid_ip_is_rejected() -> None:
     with pytest.raises(ValidationError):
         LogEvent(
-            timestamp=datetime.now(timezone.utc),
+            timestamp=datetime.now(UTC),
             source_ip="not-an-ip",
             message="test",
         )
@@ -48,7 +48,7 @@ def test_invalid_settings_are_rejected(monkeypatch: pytest.MonkeyPatch) -> None:
 
 
 def test_markdown_and_json_reporting(tmp_path: Path) -> None:
-    timestamp = datetime(2026, 9, 19, 8, 0, tzinfo=timezone.utc)
+    timestamp = datetime(2026, 9, 19, 8, 0, tzinfo=UTC)
     event = LogEvent(
         timestamp=timestamp,
         event_type=EventType.LOGIN_FAILURE,
