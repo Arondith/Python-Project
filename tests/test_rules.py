@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from logscope.engine import AnalysisEngine
 from logscope.models import EventType, LogEvent
@@ -18,7 +18,7 @@ def make_event(
     return (
         event_id,
         LogEvent(
-            timestamp=datetime(2026, 9, 19, 8, 0, tzinfo=timezone.utc)
+            timestamp=datetime(2026, 9, 19, 8, 0, tzinfo=UTC)
             + timedelta(minutes=minute),
             event_type=event_type,
             source_ip=source_ip,
