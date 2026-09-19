@@ -32,11 +32,12 @@ def test_parse_jsonl(tmp_path: Path) -> None:
 
 def test_parse_csv(tmp_path: Path) -> None:
     path = tmp_path / "events.csv"
-    path.write_text(
-        "timestamp,event_type,source_ip,username,message,status_code,metadata\n"
-        '2026-09-19T09:00:00Z,http_request,198.51.100.2,,Server error,503,"{""service"":""api""}"\n',
-        encoding="utf-8",
+    header = "timestamp,event_type,source_ip,username,message,status_code,metadata\n"
+    record = (
+        '2026-09-19T09:00:00Z,http_request,198.51.100.2,,Server error,503,'
+        '"{""service"":""api""}"\n'
     )
+    path.write_text(header + record, encoding="utf-8")
 
     events = list(parse_path(path))
 
